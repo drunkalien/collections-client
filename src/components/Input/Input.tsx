@@ -7,19 +7,19 @@ type Props = HTMLProps<HTMLInputElement> & {
 
 const Input = forwardRef<any, Props>(({ label, error, ...otherProps }, ref) => {
   return (
-    <div>
-      <label htmlFor={label.toLowerCase()} className="w-max">
+    <div className="m-3 flex flex-col items-start">
+      <label htmlFor={label.toLowerCase()} className="my-1">
         {label}
       </label>
       <input
         id={label.toLowerCase()}
         ref={ref}
-        className={`w-max border-solid border-1 rounded p-1 border-blue-400 ${
-          error ? "border-red-600" : ""
+        className={`w-max border-solid border-2 rounded p-1  ${
+          error ? "border-red-600" : "border-black"
         }`}
         {...otherProps}
       />
-      {error && <p>{error}</p>}
+      {error && <p className="text-red-600">{error}</p>}
     </div>
   );
 });
