@@ -2,7 +2,7 @@ import { HTMLProps, forwardRef } from "react";
 
 type Props = HTMLProps<HTMLInputElement> & {
   label: string;
-  error?: string | undefined;
+  error: string | undefined;
 };
 
 const Input = forwardRef<any, Props>(({ label, error, ...otherProps }, ref) => {
