@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import cn from "classnames";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -11,7 +12,10 @@ type FormValues = {
 };
 
 const schema = yup.object().shape({
-  username: yup.string().min(4).required("Please enter your username!"),
+  username: yup
+    .string()
+    .min(4, "Username must be at least 4 characters long!")
+    .required("Please enter your username!"),
   email: yup.string().email().required("Please enter your email!"),
   password: yup.string().required("Enter your password motherfucker!!!"),
 });
@@ -32,27 +36,30 @@ const SignupForm = () => {
   return (
     <form
       onSubmit={handleSubmit(submit)}
-      className="flex w-3/4 flex-col items-center justify-center p-5"
+      className={cn("flex flex-col w-full items-center justify-center")}
     >
       <Input
         label="Username"
         type="text"
-        error={errors["username"]?.message}
+        errorMessage={errors["username"]?.message}
         {...register("username")}
       />
       <Input
         label="Email"
         type="email"
-        error={errors["email"]?.message}
+        errorMessage={errors["email"]?.message}
         {...register("email")}
       />
       <Input
         label="Password"
         type="password"
-        error={errors["password"]?.message}
+        errorMessage={errors["password"]?.message}
         {...register("password")}
       />
-      <button className="p-2 bg-blue-400 rounded text-white" type="submit">
+      <button
+        className="p-2 w-full mt-[10px] bg-[#1C1C1C] text-white rounded"
+        type="submit"
+      >
         Sign up
       </button>
     </form>
