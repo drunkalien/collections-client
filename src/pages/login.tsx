@@ -1,10 +1,9 @@
 import { GetStaticProps, NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
-import { Signup } from "components";
+import { Login } from "components";
 
 const signup: NextPage = () => {
-  return <Signup />;
+  return <Login />;
 };
 
 export default signup;

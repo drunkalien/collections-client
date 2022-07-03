@@ -6,8 +6,9 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
   disabled?: boolean;
   errorMessage?: string;
   message?: string;
-  customClassName?: string;
-  label: string;
+  className?: string;
+  placeholder?: string;
+  label?: string;
 };
 
 const Input = forwardRef(
@@ -17,8 +18,9 @@ const Input = forwardRef(
       message,
       errorMessage,
       disabled,
-      customClassName = "",
+      className = "",
       label,
+      placeholder,
       ...props
     }: Props,
     ref
@@ -34,56 +36,27 @@ const Input = forwardRef(
         >
           {icon && icon}
         </div>
-        <label htmlFor={label.toLowerCase()}>{label}</label>
+        <label htmlFor={label?.toLowerCase()} className="mb-1 text-xs">
+          {label}
+        </label>
         <input
           ref={ref as any}
-          id={label.toLowerCase()}
+          id={label?.toLowerCase()}
           disabled={disabled}
           style={{ paddingLeft: icon ? 43 : 16 }}
+          placeholder={placeholder}
           className={cn(
-            `py-[3px]
-        pr-[16px]
-        my-[3px]
-        border-black
-        text-primary-text
-        placeholder:text-secondary-text
-        border-[1px]
-        border-disabled-text
-        rounded-[4px]
-        w-full
-        focus:border-primary-text
-        focus:outline-2
-        focus:laceholder:text-disabled-text
-        disabled:border-disabled-text
-        disabled:text-disabled-text
-        disabled:placeholder-disabled-text
-        disabled:bg-divider-l
-        _outline-effect
-      `,
-            customClassName,
+            "py-[10px] text-sm px-[12px] border-black border-[1px] rounded-[4px] w-full placeholder:italic placeholder:text-gray",
+            className,
             {
-              "bg-error-secondary": error,
-              "placeholder:text-error": error,
-              "placeholder:text-opacity-70": error,
-              "text-error": error,
-              "border-error": error,
-              "focus:border-error": error,
-              "_outline-effect-error": error,
+              "border-red": error,
             }
           )}
           {...props}
         />
         {(error || !!message) && (
           <div className="flex items-center mt-[8px]">
-            <p
-              className={cn("text-red", {
-                "text-error": error,
-                "text-secondary-text": !error,
-                "disabled:text-disabled-text": disabled,
-              })}
-            >
-              {error ? errorMessage : message}
-            </p>
+            <p className={cn("text-red")}>{error ? errorMessage : message}</p>
           </div>
         )}
       </div>

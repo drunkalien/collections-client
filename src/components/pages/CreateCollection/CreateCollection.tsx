@@ -1,10 +1,11 @@
 import CollectionForm from "./_form";
+import { Container } from "components";
 
 const CreateCollection = () => {
   return (
-    <div>
+    <Container>
       <CollectionForm />
-    </div>
+    </Container>
   );
 };
 
