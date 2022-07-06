@@ -6,17 +6,6 @@ import { useTheme } from "next-themes";
 
 import LanguagePicker from "./LanguagePicker";
 
-const themeOptions = [
-  {
-    value: "light",
-    label: "Light",
-  },
-  {
-    value: "dark",
-    label: "Dark",
-  },
-];
-
 const Header = () => {
   const { t } = useTranslation();
   const [mounted, setMounted] = useState(false);
@@ -25,6 +14,17 @@ const Header = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const themeOptions = [
+    {
+      value: "light",
+      label: t("Light"),
+    },
+    {
+      value: "dark",
+      label: t("Dark"),
+    },
+  ];
 
   if (!mounted) {
     return null;
