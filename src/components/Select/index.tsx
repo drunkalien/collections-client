@@ -19,6 +19,7 @@ const Select = ({
   disabled,
   label,
   id,
+  className,
   placeholder,
   options,
   ...props
@@ -46,7 +47,7 @@ const Select = ({
           }
           classNamePrefix={cn("_select")}
           noOptionsMessage={() => message || t("No options")}
-          className={cn({
+          className={cn(className, {
             _error: error,
             _sm: size === "sm",
             "with-icon": !!icon,

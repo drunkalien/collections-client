@@ -2,18 +2,14 @@ import { useForm, useFieldArray } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import cn from "classnames";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import Image from "next/image";
 
-import { Paper, Input, Textarea, Button, Select } from "components";
+import { Paper, Input, Textarea, Button, Select, Dropzone } from "components";
 import { useTranslation } from "next-i18next";
-
-type FieldType = "checkbox" | "text" | "date" | "textbox";
-
-type CustomFieldsType = {
-  label: string;
-  type: FieldType;
-  value: string;
-};
+import { FieldType, CustomFieldsType } from "types";
+import { useAPIMutation, useAPIQuery, useCurrentUser } from "hooks";
+import { toFormData } from "utils";
 
 type FormValues = {
   name: string;
@@ -21,6 +17,7 @@ type FormValues = {
   tags?: string[];
   customFields?: CustomFieldsType[];
   description: string;
+  image: File | null;
 };
 
 const typeOptions = [
@@ -37,8 +34,8 @@ const typeOptions = [
     label: "Date",
   },
   {
-    value: "textbox",
-    label: "Textbox",
+    value: "textarea",
+    label: "Textarea",
   },
 ];
 
@@ -54,20 +51,51 @@ const CollectionForm = () => {
   const {
     register,
     control,
+    getValues,
+    watch,
+    setValue,
+    setError,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
+  watch("image");
   const { fields, append, remove } = useFieldArray({
     control,
     name: "customFields",
   });
   const [type, setType] = useState<FieldType>("text");
+  const collectionMutation = useAPIMutation({ url: "collections" });
+  const userQuery = useCurrentUser();
 
-  function submit(data: FormValues) {
-    console.log(data);
+  async function submit(data: FormValues) {
+    const query = await userQuery;
+    if (!query.isLoading) {
+      const mutation = await collectionMutation.mutateAsync(
+        toFormData({
+          name: data.name,
+          description: data.description,
+          image: data.image || "",
+          author: query.data.user._id,
+          tags: data.tags,
+          customFields: JSON.stringify(data.customFields),
+        })
+      );
+    }
   }
+
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const file = acceptedFiles[0];
+      setValue("image", file);
+    },
+    [setValue]
+  );
+
+  const removeFile = () => {
+    setValue("image", null);
+  };
 
   return (
     <form
@@ -81,59 +109,45 @@ const CollectionForm = () => {
       </div>
 
       <div className={cn("col-span-3")}>
-        <Input label="Collection name" />
+        <Input label="Collection name" {...register("name")} />
       </div>
 
-      <p className={cn("col-span-full")}>Cover (image)</p>
+      <p className={cn("col-span-full")}>{t("Cover (image)")}</p>
       <div className={cn("col-span-5")}>
-        <Paper
-          className={cn(
-            "border-dashed px-20 py-40 flex justify-center align-center"
-          )}
-        >
-          <input
-            type="file"
-            id="image"
-            onChange={(e) => console.log(e)}
-            className={cn("w-0 h-0")}
-          />
-          <label
-            htmlFor="image"
-            className={cn(
-              "bg-black py-2 px-8 text-white font-bold rounded cursor-pointer"
-            )}
+        <Dropzone onDrop={onDrop} />
+      </div>
+
+      <div className={cn("col-span-3 relative")}>
+        {getValues().image ? (
+          <>
+            <div
+              className="absolute top-0 right-0 bg-red cursor-pointer z-10 text-white py-1 px-2 text-xs rounded-full"
+              onClick={removeFile}
+            >
+              {t("Remove")}
+            </div>
+            <Image
+              width={305}
+              layout="fill"
+              objectFit="contain"
+              src={URL.createObjectURL(getValues().image!)}
+              alt="preview"
+            />
+          </>
+        ) : (
+          <Paper
+            className={cn("text-gray flex justify-center items-center h-full")}
           >
-            {t("Click or drag here to upload")}
-          </label>
-        </Paper>
-      </div>
-
-      <div className={cn("col-span-3")}>
-        <Paper className={cn("text-gray py-40 text-center")}>preview</Paper>
+            {t("preview")}
+          </Paper>
+        )}
       </div>
 
       <div className={cn("col-span-5")}>
-        <Textarea label={t("Description")} />
+        <Textarea label={t("Description")} {...register("description")} />
       </div>
 
       <div className="col-span-7"></div>
-
-      <div className="col-span-3">
-        <Input
-          placeholder="Enter item name"
-          label="Name"
-          {...register(`name`)}
-        />
-      </div>
-      <div className="col-span-3">
-        <Select
-          label="Type"
-          id="fieldtype"
-          placeholder="Select field type"
-          options={typeOptions}
-          onChange={(e) => setType(e?.value as FieldType)}
-        />
-      </div>
 
       {fields.map((field, index) => (
         <div className="col-span-12 grid grid-cols-12 gap-5" key={field.id}>
@@ -141,7 +155,7 @@ const CollectionForm = () => {
             <Input
               placeholder="Enter field name (e.g. book author)"
               label="Name"
-              {...register(`customFields.${index}.value`)}
+              {...register(`customFields.${index}.label`)}
             />
           </div>
           <div className="col-span-3">
@@ -157,7 +171,7 @@ const CollectionForm = () => {
             className="col-span-6 flex items-end"
             onClick={() => remove(index)}
           >
-            <Button className="bg-red">Remove</Button>
+            <Button className="bg-red">{t("Remove")}</Button>
           </div>
         </div>
       ))}
@@ -167,11 +181,11 @@ const CollectionForm = () => {
           className="bg-yellow"
           onClick={() => append({ label: "", type, value: "" })}
         >
-          Add field
+          {t("Add field")}
         </Button>
       </div>
       <div className="col-span-12">
-        <Button type="submit">Create</Button>
+        <Button type="submit">{t("Create collection")}</Button>
       </div>
     </form>
   );

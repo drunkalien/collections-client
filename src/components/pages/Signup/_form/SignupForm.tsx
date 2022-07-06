@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { Input, Button } from "components";
+import { useAPIMutation } from "hooks";
 
 type FormValues = {
   username: string;
@@ -28,9 +29,12 @@ const SignupForm = () => {
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
+  const signupMutation = useAPIMutation({ url: "/users/signup" });
 
-  function submit(data: FormValues) {
-    console.log(data);
+  async function submit(data: FormValues) {
+    const mutation = await signupMutation.mutateAsync(data);
+    window.localStorage.setItem("token", mutation.data.token);
+    console.log(mutation);
   }
 
   return (
