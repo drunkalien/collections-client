@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import cn from "classnames";
 import { useCallback, useState } from "react";
 import Image from "next/image";
+import ReactMarkdown from "react-markdown";
 
 import { Paper, Input, Textarea, Button, Select, Dropzone } from "components";
 import { useTranslation } from "next-i18next";
@@ -47,7 +48,7 @@ const schema = yup.object().shape({
 
 const CollectionForm = () => {
   const { t } = useTranslation();
-
+  const [desc, setDesc] = useState("");
   const {
     register,
     control,
@@ -70,7 +71,7 @@ const CollectionForm = () => {
   const userQuery = useCurrentUser();
 
   async function submit(data: FormValues) {
-    const query = await userQuery;
+    const query = userQuery;
     if (!query.isLoading) {
       const mutation = await collectionMutation.mutateAsync(
         toFormData({
@@ -144,10 +145,18 @@ const CollectionForm = () => {
       </div>
 
       <div className={cn("col-span-5")}>
-        <Textarea label={t("Description")} {...register("description")} />
+        <Textarea
+          label={t("Description")}
+          {...register("description")}
+          onChange={(e) => setDesc(e.target.value)}
+        />
       </div>
-
-      <div className="col-span-7"></div>
+      <div className="col-span-7 pb-7 ">
+        <label>Preview</label>
+        <ReactMarkdown className="border-solid border-black border-[1px] rounded h-full prose p-2">
+          {desc}
+        </ReactMarkdown>
+      </div>
 
       {fields.map((field, index) => (
         <div className="col-span-12 grid grid-cols-12 gap-5" key={field.id}>
