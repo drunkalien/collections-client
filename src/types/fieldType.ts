@@ -1,1 +1,1 @@
-export type FieldType = "checkbox" | "text" | "date" | "textbox";
+export type FieldType = "checkbox" | "text" | "date" | "textarea";
