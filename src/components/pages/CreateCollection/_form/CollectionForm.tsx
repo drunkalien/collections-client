@@ -77,7 +77,7 @@ const CollectionForm = () => {
           name: data.name,
           description: data.description,
           image: data.image || "",
-          author: query.data.user._id,
+          author: query.data?.user._id,
           tags: data.tags,
           customFields: JSON.stringify(data.customFields),
         })
