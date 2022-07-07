@@ -1,6 +1,22 @@
 {
+  "Add field": "Add field",
+  "Add Item": "Add Item",
+  "by": "by",
   "Click or drag here to upload": "Rasm yuklash uchun shu yerga bosing",
-  "Create collection": "Create collection",
-  "Description": "Description",
-  "No options": "No options"
+  "Collection name": "Collection name",
+  "Cover (image)": "Rasm",
+  "Create collection": "To'plam yaratish",
+  "Dark": "Qorong'u",
+  "Description": "Tavsif",
+  "Drop the file here...": "Faylni shu yerga tashlang...",
+  "English": "Ingliz",
+  "Large collections": "Katta to'plamlar",
+  "Light": "Yoruq",
+  "Name": "Nom",
+  "No options": "Variantlar yo'q",
+  "preview": "prevyu",
+  "Recent items": "Songi elementlar",
+  "Remove": "O'chirish",
+  "Tags": "Teglar",
+  "Uzbek": "O'zbek"
 }
