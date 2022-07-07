@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Paper, Input, Textarea, Button, Select, Dropzone } from "components";
 import { useTranslation } from "next-i18next";
 import { FieldType, CustomFieldsType } from "types";
-import { useAPIMutation, useAPIQuery, useCurrentUser } from "hooks";
+import { useAPIMutation, useCurrentUser } from "hooks";
 import { toFormData } from "utils";
 
 type FormValues = {
