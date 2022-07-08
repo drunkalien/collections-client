@@ -153,7 +153,7 @@ const CollectionForm = () => {
       </div>
       <div className="col-span-7 pb-7 ">
         <label>Preview</label>
-        <ReactMarkdown className="border-solid border-black border-[1px] rounded h-full prose p-2">
+        <ReactMarkdown className="border-solid border-black border-[1px] rounded h-full prose p-2 dark:text-white">
           {desc}
         </ReactMarkdown>
       </div>
