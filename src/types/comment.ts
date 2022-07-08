@@ -1,5 +1,5 @@
 export type Comment = {
-  comment: CommentData;
+  comments: CommentData[];
 };
 
 export type CommentData = {
