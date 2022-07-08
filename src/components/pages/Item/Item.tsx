@@ -21,7 +21,9 @@ const Item = () => {
   const { item } = router.query;
   const itemQuery = useAPIQuery<ItemType>({ url: `items/${item}` });
   const userQuery = useCurrentUser();
-  const commentsQuery = useAPIQuery<Comment>({ url: `items/${item}/comments` });
+  const commentsQuery = useAPIQuery<Comment>({
+    url: `items/${item}/comments`,
+  });
   const commentMutation = useAPIMutation({
     url: `comments`,
     params: { itemId: item, userId: userQuery.data?.user._id },
