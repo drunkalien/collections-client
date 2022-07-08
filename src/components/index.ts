@@ -9,4 +9,11 @@ export { default as Select } from "./Select";
 export { default as Dropzone } from "./Dropzone";
 export { default as Table } from "./Table";
 
-export { Home, Signup, CreateCollection, Login, CreateItem } from "./pages";
+export {
+  Home,
+  Signup,
+  CreateCollection,
+  Login,
+  CreateItem,
+  Item,
+} from "./pages";
