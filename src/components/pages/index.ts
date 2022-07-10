@@ -3,6 +3,7 @@ import Home from "./Home";
 import CreateCollection from "./CreateCollection";
 import Login from "./Login";
 import CreateItem from "./CreateItem";
-import ItemType from "./Item";
+import Item from "./Item";
+import EditItem from "./EditItem";
 
-export { Signup, Home, CreateCollection, Login, CreateItem, ItemType as Item };
+export { Signup, Home, CreateCollection, Login, CreateItem, Item, EditItem };
