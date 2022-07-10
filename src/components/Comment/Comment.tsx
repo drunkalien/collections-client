@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 
 import { useAPIQuery } from "hooks";
+import Link from "next/link";
 import { CommentData, UserData } from "types";
 
 type Props = {
@@ -15,16 +16,20 @@ const Comment = ({ comment }: Props) => {
   return (
     <div className="flex gap-5 my-6">
       <div>
-        <img
-          className="w-[70px] h-[70px] rounded-full bg-gray overflow-hidden"
-          src={authorQuery.data?.avatar}
-          alt={authorQuery.data?.username}
-          width={70}
-          height={70}
-        />
+        <Link href={`/users/${comment.author}`}>
+          <img
+            className="w-[70px] h-[70px] rounded-full bg-gray overflow-hidden"
+            src={authorQuery.data?.avatar}
+            alt={authorQuery.data?.username}
+            width={70}
+            height={70}
+          />
+        </Link>
       </div>
       <div>
-        <div className="font-bold">{authorQuery.data?.username}</div>
+        <Link href={`/users/${comment.author}`}>
+          <div className="font-bold">{authorQuery.data?.username}</div>
+        </Link>
         <div className="text-gray">
           {dayjs(authorQuery.data?.createdAt).format("DD.MM.YYYY")}
         </div>
