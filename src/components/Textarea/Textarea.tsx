@@ -10,13 +10,24 @@ type Props = InputHTMLAttributes<HTMLTextAreaElement> & {
 };
 
 const Textarea = forwardRef(
-  ({ icon, message, errorMessage, disabled, label, ...props }: Props, ref) => {
+  (
+    {
+      icon,
+      message,
+      errorMessage,
+      disabled,
+      label,
+      className,
+      ...props
+    }: Props,
+    ref
+  ) => {
     const error = !!errorMessage;
 
     return (
       <div className="flex flex-col relative _input">
         <div
-          className={cn(`absolute left-[17px] top-[17px]`, {
+          className={cn(`absolute left-[17px] top-[17px]`, className, {
             "_icon-disabled": disabled,
             "_icon-error": error,
           })}

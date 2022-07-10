@@ -8,6 +8,8 @@ export { default as Button } from "./Button";
 export { default as Select } from "./Select";
 export { default as Dropzone } from "./Dropzone";
 export { default as Table } from "./Table";
+export { default as Comment } from "./Comment";
+export { default as Chip } from "./Chip";
 
 export {
   Home,
@@ -16,4 +18,5 @@ export {
   Login,
   CreateItem,
   Item,
+  EditItem,
 } from "./pages";
