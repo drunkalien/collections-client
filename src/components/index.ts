@@ -19,4 +19,5 @@ export {
   CreateItem,
   Item,
   EditItem,
+  User,
 } from "./pages";

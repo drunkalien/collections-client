@@ -5,5 +5,15 @@ import Login from "./Login";
 import CreateItem from "./CreateItem";
 import Item from "./Item";
 import EditItem from "./EditItem";
+import User from "./User";
 
-export { Signup, Home, CreateCollection, Login, CreateItem, Item, EditItem };
+export {
+  Signup,
+  Home,
+  CreateCollection,
+  Login,
+  CreateItem,
+  Item,
+  EditItem,
+  User,
+};
