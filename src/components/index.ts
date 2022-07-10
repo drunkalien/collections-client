@@ -10,6 +10,7 @@ export { default as Dropzone } from "./Dropzone";
 export { default as Table } from "./Table";
 export { default as Comment } from "./Comment";
 export { default as Chip } from "./Chip";
+export { default as Collection } from "./Collection";
 
 export {
   Home,
