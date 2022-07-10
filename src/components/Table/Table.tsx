@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { Column, useTable } from "react-table";
 
 type Props = {
@@ -5,7 +6,8 @@ type Props = {
   data: any[];
 };
 
-const Table = ({ columns, data }: Props) => {
+const Table = ({ columns, data = [] }: Props) => {
+  const router = useRouter();
   const table = useTable({
     columns,
     data,
@@ -27,7 +29,16 @@ const Table = ({ columns, data }: Props) => {
         {table.rows.map((row, idx) => {
           table.prepareRow(row);
           return (
-            <tr {...row.getRowProps()} key={idx}>
+            <tr
+              className="cursor-pointer"
+              {...row.getRowProps()}
+              key={idx}
+              onClick={() => {
+                router.push(
+                  `/collections/${row.original.itemCollection}/items/${row.original._id}`
+                );
+              }}
+            >
               {row.cells.map((cell, idx) => (
                 <td {...cell.getCellProps()} key={idx}>
                   {cell.render("Cell")}
