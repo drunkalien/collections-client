@@ -7,7 +7,7 @@ type Props = {
   name: string;
   image?: string;
   author: string;
-  id: number;
+  id: string;
 };
 
 const Collection = ({ name, image, author, id }: Props) => {
