@@ -7,13 +7,18 @@ type Props = {
   name: string;
   image?: string;
   author: string;
+  id: number;
 };
 
-const Collection = ({ name, image, author }: Props) => {
+const Collection = ({ name, image, author, id }: Props) => {
   const { t } = useTranslation();
+  const link = {
+    pathname: "/collections/[collection]",
+    query: { collection: id },
+  };
   return (
     <Paper className="max-w-xl md:w-full mx-auto mb-7">
-      <Link href="/">
+      <Link href={link}>
         <a>
           <h4 className="text-lg font-bold mb-4">{name}</h4>
         </a>
@@ -34,7 +39,7 @@ const Collection = ({ name, image, author }: Props) => {
           </Link>
         </div>
 
-        <Link href="/">
+        <Link href={link}>
           <Button>View</Button>
         </Link>
       </div>
