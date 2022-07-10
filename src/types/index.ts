@@ -4,3 +4,5 @@ export { type SchemaValues } from "./schemaValues";
 export { type User } from "./UserType";
 export { type ItemType } from "./item";
 export { type Comment } from "./comment";
+export { type CommentData } from "./comment";
+export { type Collection } from "./collection";

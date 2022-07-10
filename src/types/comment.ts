@@ -3,6 +3,7 @@ export type Comment = {
 };
 
 export type CommentData = {
+  _id: string;
   author: string;
   commentedTo: string;
   body: string;
