@@ -111,7 +111,7 @@ const Item = () => {
           </div>
         </>
       )}
-      {/* <p>{itemQuery.data?.tags}</p> */}
+
       <div className="mb-4 flex flex-wrap">
         {items.map((tag, idx) => (
           <Link key={idx} href="/">
