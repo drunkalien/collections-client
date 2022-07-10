@@ -3,7 +3,6 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import cn from "classnames";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { useTranslation } from "next-i18next";
 
 import { CustomFieldsType, SchemaValues } from "types";
@@ -43,7 +42,7 @@ const ItemForm = () => {
   }>({
     url: `custom-fields/${collection}`,
   });
-  const customFields = fieldsQuery.data?.customFields || [];
+  const customFields = fieldsQuery.data?.customFields;
 
   useFieldArray({
     control,
@@ -51,8 +50,8 @@ const ItemForm = () => {
   });
 
   const submit = async (data: FormValues) => {
-    for (let i = 0; i < customFields.length; i++) {
-      data.customFields[i] = { ...customFields[i], ...data.customFields[i] };
+    for (let i = 0; i < customFields?.length!; i++) {
+      data.customFields[i] = { ...customFields![i], ...data.customFields[i] };
     }
     await itemMutation.mutateAsync(data);
   };
@@ -68,7 +67,7 @@ const ItemForm = () => {
       <div className="mt-4">
         <Input label={t("Tags")} {...register("tags")} />
       </div>
-      {customFields.length > 0 &&
+      {customFields?.length! > 0 &&
         customFields?.map((field, idx) => (
           <div className="mt-4" key={idx}>
             {field.type !== "textarea" ? (
@@ -85,7 +84,9 @@ const ItemForm = () => {
             )}
           </div>
         ))}
-      <Button type="submit">Create Item</Button>
+      <Button className="mt-2" type="submit">
+        Create Item
+      </Button>
     </form>
   );
 };
