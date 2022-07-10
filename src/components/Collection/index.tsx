@@ -8,9 +8,10 @@ type Props = {
   image?: string;
   author: string;
   id: string;
+  authorId: string;
 };
 
-const Collection = ({ name, image, author, id }: Props) => {
+const Collection = ({ name, image, author, id, authorId }: Props) => {
   const { t } = useTranslation();
   const link = {
     pathname: "/collections/[collection]",
@@ -34,7 +35,7 @@ const Collection = ({ name, image, author, id }: Props) => {
       <div className="mt-4 flex justify-between items-center">
         <div>
           {t("by")}{" "}
-          <Link href="/">
+          <Link href={`/users/${authorId}`}>
             <a className="text-blue-600">{author}</a>
           </Link>
         </div>

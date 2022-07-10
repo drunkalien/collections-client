@@ -45,6 +45,7 @@ const LargeCollections = () => {
           name={name}
           image={image}
           key={idx}
+          authorId={"/"}
         />
       ))}
     </div>

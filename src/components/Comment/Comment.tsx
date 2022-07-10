@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 
 import { useAPIQuery } from "hooks";
+import Image from "next/image";
 import Link from "next/link";
 import { CommentData, UserData } from "types";
 
@@ -17,9 +18,9 @@ const Comment = ({ comment }: Props) => {
     <div className="flex gap-5 my-6">
       <div>
         <Link href={`/users/${comment.author}`}>
-          <img
+          <Image
             className="w-[70px] h-[70px] rounded-full bg-gray overflow-hidden"
-            src={authorQuery.data?.avatar}
+            src={authorQuery.data?.avatar || "/profile.svg"}
             alt={authorQuery.data?.username}
             width={70}
             height={70}
