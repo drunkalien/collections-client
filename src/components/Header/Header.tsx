@@ -3,6 +3,7 @@ import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
 import { FiMoon, FiSun, FiUser } from "react-icons/fi";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 
 import LanguagePicker from "./LanguagePicker";
 
@@ -34,7 +35,11 @@ const Header = () => {
     <header className="border-b-[1px] border-b-gray">
       <Container>
         <div className="flex h-[100px] justify-between items-center">
-          <div>Logo</div>
+          <Link href="/">
+            <a>
+              <div>Logo</div>
+            </a>
+          </Link>
           <div>
             <Input placeholder="Search" />
           </div>
