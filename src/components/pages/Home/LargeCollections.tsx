@@ -40,7 +40,7 @@ const LargeCollections = () => {
     <div>
       {dummyCollections.map(({ author, image, name, id }, idx) => (
         <Collection
-          id={id}
+          id={id.toString()}
           author={author}
           name={name}
           image={image}
