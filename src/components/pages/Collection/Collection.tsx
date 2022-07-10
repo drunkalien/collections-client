@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { FiLink } from "react-icons/fi";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
+import dayjs from "dayjs";
 
 import { useAPIQuery, useCurrentUser } from "hooks";
 import {
@@ -107,6 +108,10 @@ const Items = () => {
           </div>
         )),
       id: "customFields",
+    },
+    {
+      Header: "Created at",
+      accessor: ({ createdAt }: any) => dayjs(createdAt).format("DD.MM.YYYY"),
     },
   ];
 
