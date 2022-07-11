@@ -33,7 +33,7 @@ const ItemForm = () => {
   const { collection } = router.query;
   const itemMutation = useAPIMutation({
     url: "items",
-    params: { collectionId: collection, userId: userQuery.data?.user._id },
+    params: { collectionId: collection, userId: userQuery.data?.user?._id },
   });
   const fieldsQuery = useAPIQuery<{
     customFields: CustomFieldsType[];

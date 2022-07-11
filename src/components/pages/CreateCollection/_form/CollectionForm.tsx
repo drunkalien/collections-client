@@ -70,15 +70,14 @@ const CollectionForm = () => {
   const collectionMutation = useAPIMutation({ url: "collections" });
   const userQuery = useCurrentUser();
 
-  async function submit(data: FormValues) {
-    const query = userQuery;
-    if (!query.isLoading) {
-      const mutation = await collectionMutation.mutateAsync(
+  function submit(data: FormValues) {
+    if (!userQuery.isLoading) {
+      collectionMutation.mutate(
         toFormData({
           name: data.name,
           description: data.description,
           image: data.image || "",
-          author: query.data?.user._id,
+          author: userQuery.data?.user?._id,
           tags: data.tags,
           customFields: JSON.stringify(data.customFields),
         })
@@ -180,7 +179,9 @@ const CollectionForm = () => {
             className="col-span-6 flex items-end"
             onClick={() => remove(index)}
           >
-            <Button className="bg-red">{t("Remove")}</Button>
+            <Button type="button" className="bg-red">
+              {t("Remove")}
+            </Button>
           </div>
         </div>
       ))}
@@ -188,6 +189,7 @@ const CollectionForm = () => {
       <div className="col-span-12">
         <Button
           className="bg-yellow"
+          type="button"
           onClick={() => append({ label: "", type, value: "" })}
         >
           {t("Add field")}

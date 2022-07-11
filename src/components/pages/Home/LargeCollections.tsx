@@ -9,7 +9,7 @@ const LargeCollections = () => {
 
   return (
     <div>
-      {collectionsQuery?.data?.collections.map(
+      {collectionsQuery?.data?.collections?.map(
         ({ image, name, author, _id }, idx) => (
           <Collection
             id={_id}

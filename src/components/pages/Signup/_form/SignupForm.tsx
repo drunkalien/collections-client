@@ -5,6 +5,7 @@ import * as yup from "yup";
 
 import { Input, Button } from "components";
 import { useAPIMutation } from "hooks";
+import { useRouter } from "next/router";
 
 type FormValues = {
   username: string;
@@ -30,11 +31,16 @@ const SignupForm = () => {
     resolver: yupResolver(schema),
   });
   const signupMutation = useAPIMutation({ url: "/users/signup" });
+  const router = useRouter();
 
   async function submit(data: FormValues) {
     const mutation = await signupMutation.mutateAsync(data);
-    window.localStorage.setItem("token", mutation.data.token);
-    console.log(mutation);
+    if (mutation.data.success) {
+      window.localStorage.setItem("token", mutation.data?.token);
+      router.push("/");
+    } else {
+      alert("Something went wrong!");
+    }
   }
 
   return (

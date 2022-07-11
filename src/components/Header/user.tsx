@@ -10,7 +10,7 @@ const User = () => {
     <div className="flex items-center gap-5">
       {windowIsDefined() && window.localStorage.getItem("token") ? (
         <div className="cursor-pointer">
-          <Link href={`/users/${userQuery.data?.user._id}` || ""}>
+          <Link href={`/users/${userQuery.data?.user?._id}` || ""}>
             <FiUser size={24} />
           </Link>
         </div>

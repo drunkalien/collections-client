@@ -34,7 +34,7 @@ const CollectionPage = () => {
           >
             {collectionQuery.data?.name}
           </h1>
-          {userQuery.data?.user._id === collectionQuery.data?.author && (
+          {userQuery.data?.user?._id === collectionQuery.data?.author && (
             <Link
               href={`/collections/${collectionQuery.data?._id}/items/create`}
             >

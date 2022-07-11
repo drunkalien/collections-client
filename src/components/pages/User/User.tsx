@@ -31,7 +31,7 @@ const User = () => {
           {!currentUserQuery.isLoading &&
             windowIsDefined() &&
             window.localStorage.getItem("token") &&
-            currentUserQuery.data?.user._id === user && (
+            currentUserQuery.data?.user?._id === user && (
               <Button>{t("Uplaod image")}</Button>
             )}
         </div>
@@ -51,13 +51,13 @@ const User = () => {
           {!currentUserQuery.isLoading &&
             windowIsDefined() &&
             window.localStorage.getItem("token") &&
-            currentUserQuery.data?.user._id === user && (
+            currentUserQuery.data?.user?._id === user && (
               <Link href="/collections/create">
                 <Button>Add Collection</Button>
               </Link>
             )}
         </div>
-        {collectionsQuery.data?.collections.map((collection) => (
+        {collectionsQuery.data?.collections?.map((collection) => (
           <Collection
             id={collection._id}
             key={collection._id}

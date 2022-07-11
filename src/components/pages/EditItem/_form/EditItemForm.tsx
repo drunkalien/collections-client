@@ -37,7 +37,7 @@ const EditItemForm = () => {
     method: "PATCH",
     params: {
       collectionId: collection,
-      userId: userQuery.data?.user._id,
+      userId: userQuery.data?.user?._id,
       role: userQuery.data?.user.role,
     },
   });
