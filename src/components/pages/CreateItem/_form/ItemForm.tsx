@@ -11,7 +11,7 @@ import { useAPIMutation, useAPIQuery, useCurrentUser } from "hooks";
 
 type FormValues = {
   name: string;
-  tags: string[];
+  tags: string;
   customFields: CustomFieldsType[];
 };
 
@@ -23,7 +23,7 @@ const schema = yup.object<SchemaValues<FormValues>>({
 
 const ItemForm = () => {
   const { t } = useTranslation();
-  const { register, control, handleSubmit } = useForm<FormValues>({
+  const { register, control, handleSubmit, reset } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
 
@@ -50,10 +50,12 @@ const ItemForm = () => {
   });
 
   const submit = async (data: FormValues) => {
+    const tags = data.tags?.split(" ");
     for (let i = 0; i < customFields?.length!; i++) {
       data.customFields[i] = { ...customFields![i], ...data.customFields[i] };
     }
-    await itemMutation.mutateAsync(data);
+    await itemMutation.mutateAsync({ ...data, tags });
+    reset();
   };
 
   return (

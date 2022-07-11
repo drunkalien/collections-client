@@ -34,14 +34,13 @@ const CollectionPage = () => {
           >
             {collectionQuery.data?.name}
           </h1>
-          {!userQuery.isLoading &&
-            userQuery.data?.user._id === collectionQuery.data?.author && (
-              <Link
-                href={`/collections/${collectionQuery.data?._id}/items/create`}
-              >
-                <Button>Add Item</Button>
-              </Link>
-            )}
+          {userQuery.data?.user._id === collectionQuery.data?.author && (
+            <Link
+              href={`/collections/${collectionQuery.data?._id}/items/create`}
+            >
+              <Button>Add Item</Button>
+            </Link>
+          )}
         </div>
         <div>
           {collectionQuery.data?.image ? (

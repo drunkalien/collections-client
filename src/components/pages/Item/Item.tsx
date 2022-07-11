@@ -56,34 +56,6 @@ const Item = () => {
     }
   }
 
-  const items = [
-    "#mashle",
-    "#mashle",
-    "#helloworld",
-    "#manga",
-    "#anime",
-    "#mashle",
-    "#helloworld",
-    "#manga",
-    "#anime",
-    "#mashle",
-    "#helloworld",
-    "#manga",
-    "#anime",
-    "#mashle",
-    "#helloworld",
-    "#manga",
-    "#anime",
-    "#mashle",
-    "#helloworld",
-    "#manga",
-    "#anime",
-    "#mashle",
-    "#helloworld",
-    "#manga",
-    "#anime",
-  ];
-
   return (
     <Container>
       {!itemQuery.isLoading && (
@@ -115,7 +87,7 @@ const Item = () => {
       )}
 
       <div className="mb-4 flex flex-wrap">
-        {items.map((tag, idx) => (
+        {itemQuery.data?.tags?.map((tag, idx) => (
           <Link
             key={idx}
             href={{ pathname: "/search", query: { keyword: tag } }}
