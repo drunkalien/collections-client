@@ -1,4 +1,4 @@
-import { Input, Container, Select } from "components";
+import { Container, Select, Button } from "components";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
 import { FiMoon, FiSun, FiUser } from "react-icons/fi";
@@ -6,11 +6,15 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 
 import LanguagePicker from "./LanguagePicker";
+import { useCurrentUser } from "hooks";
+import SearchInput from "./SearchInput";
+import { windowIsDefined } from "utils";
 
 const Header = () => {
   const { t } = useTranslation();
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+  const userQuery = useCurrentUser();
 
   useEffect(() => {
     setMounted(true);
@@ -37,13 +41,13 @@ const Header = () => {
         <div className="flex h-[100px] justify-between items-center">
           <Link href="/">
             <a>
-              <div>Logo</div>
+              <div className="font-bold text-2xl italic">Collector</div>
             </a>
           </Link>
-          <div>
-            <Input placeholder="Search" />
+          <div className="xl:flex hidden">
+            <SearchInput />
           </div>
-          <div className="flex justify-center items-center h-full">
+          <div className="lg:flex hidden justify-center items-center h-full">
             <div className="flex items-center gap-5">
               <LanguagePicker />
               <Select
@@ -60,9 +64,22 @@ const Header = () => {
                 options={themeOptions}
                 onChange={(e) => setTheme(e.value)}
               />
-              <div className="cursor-pointer">
-                <FiUser size={24} />
-              </div>
+              {windowIsDefined() && window.localStorage.getItem("token") ? (
+                <div className="cursor-pointer">
+                  <Link href={`/users/${userQuery.data?.user._id}` || ""}>
+                    <FiUser size={24} />
+                  </Link>
+                </div>
+              ) : (
+                <div>
+                  <Link href="/login">
+                    <Button className="mx-1 bg-yellow">Login</Button>
+                  </Link>
+                  <Link href="/signup">
+                    <Button className="mx-1">Sign up</Button>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>

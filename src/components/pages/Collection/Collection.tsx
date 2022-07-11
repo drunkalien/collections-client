@@ -102,7 +102,7 @@ const Items = () => {
     {
       Header: "Details",
       accessor: ({ customFields }: any) =>
-        customFields.map((field: CustomFieldsType, idx: number) => (
+        customFields?.map((field: CustomFieldsType, idx: number) => (
           <div key={idx}>
             <Chip label={field.label} value={field.value} />
           </div>

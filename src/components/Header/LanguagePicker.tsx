@@ -1,11 +1,9 @@
 import { Select } from "components";
-import { useTranslation } from "next-i18next";
 import { useRouter } from "next/dist/client/router";
 import { FiGlobe } from "react-icons/fi";
 
 const LanguagePicker = () => {
   const router = useRouter();
-  const { t } = useTranslation();
 
   const changeLanguage = (lang: string) => {
     console.log(lang);
@@ -16,11 +14,11 @@ const LanguagePicker = () => {
   const langs = [
     {
       value: "en",
-      label: t("English"),
+      label: "English",
     },
     {
       value: "uz",
-      label: t("Uzbek"),
+      label: "O'zbek",
     },
   ];
 

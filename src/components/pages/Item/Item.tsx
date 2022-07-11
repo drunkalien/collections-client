@@ -9,6 +9,7 @@ import { Container, Textarea, Button, Comment } from "components";
 import { useAPIMutation, useAPIQuery, useCurrentUser } from "hooks";
 import { ItemType, Comment as CommentType } from "types";
 import Link from "next/link";
+import { isUserAuthenticated } from "utils";
 
 type FormValues = {
   body: string;
@@ -31,11 +32,12 @@ const Item = () => {
   });
   const itemMutation = useAPIMutation({
     url: `items/like-unlike/${item}`,
-    params: { userId: userQuery.data?.user._id },
+    params: { userId: userQuery.data?.user?._id },
   });
+
   const commentMutation = useAPIMutation({
     url: `comments`,
-    params: { itemId: item, userId: userQuery.data?.user._id },
+    params: { itemId: item, userId: userQuery.data?.user?._id },
   });
   const {
     register,
@@ -47,7 +49,7 @@ const Item = () => {
   });
 
   async function submit(data: FormValues) {
-    if (!userQuery.isLoading) {
+    if (!userQuery.isLoading && isUserAuthenticated()) {
       await commentMutation.mutateAsync(data);
       commentsQuery.refetch();
       setValue("body", "");
@@ -90,8 +92,8 @@ const Item = () => {
             <h1 className="mr-4 font-bold text-xl">{itemQuery.data?.name}</h1>
             <FiHeart
               className={cn("cursor-pointer", {
-                "fill-red stroke-red": itemQuery.data?.likedBy.includes(
-                  userQuery.data?.user._id || ""
+                "fill-red stroke-red": itemQuery.data?.likedBy?.includes(
+                  userQuery.data?.user?._id || ""
                 ),
               })}
               onClick={async () => {
@@ -102,7 +104,7 @@ const Item = () => {
             <div className="mx-2">{itemQuery.data?.numberOfLikes}</div>
           </div>
           <div className="">
-            {itemQuery.data?.customFields.map((field, idx) => (
+            {itemQuery.data?.customFields?.map((field, idx) => (
               <div className="flex my-5" key={idx}>
                 <div className="font-bold min-w-[150px]">{field.label}:</div>
                 <div className="max-w-[400px]">{field.value}</div>
@@ -114,7 +116,10 @@ const Item = () => {
 
       <div className="mb-4 flex flex-wrap">
         {items.map((tag, idx) => (
-          <Link key={idx} href="/">
+          <Link
+            key={idx}
+            href={{ pathname: "/search", query: { keyword: tag } }}
+          >
             <a className="mr-2 text-blue-600">{tag}</a>
           </Link>
         ))}
@@ -134,7 +139,7 @@ const Item = () => {
           </div>
         </div>
       </form>
-      {commentsQuery.data?.comments.map((comment) => (
+      {commentsQuery.data?.comments?.map((comment) => (
         <Comment comment={comment} key={comment._id} />
       ))}
     </Container>

@@ -7,7 +7,9 @@ export const requestInstance = axios.create({
 requestInstance.interceptors.request.use((config: AxiosRequestConfig) => {
   const token = window.localStorage.getItem("token");
 
-  config["headers"]!["Authorization"]! = `Bearer ${token}`;
+  if (token) {
+    config["headers"]!["Authorization"]! = `Bearer ${token}`;
+  }
 
   return config;
 });
@@ -16,7 +18,7 @@ requestInstance.interceptors.response.use(
   (config: AxiosRequestConfig) => config,
   (error: AxiosError) => {
     if (error.response?.status === 401) {
-      window.location.replace("/login");
+      alert("You are not logged in!");
     }
   }
 );

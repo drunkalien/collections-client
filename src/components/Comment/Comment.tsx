@@ -18,18 +18,20 @@ const Comment = ({ comment }: Props) => {
     <div className="flex gap-5 my-6">
       <div>
         <Link href={`/users/${comment.author}`}>
-          <Image
-            className="w-[70px] h-[70px] rounded-full bg-gray overflow-hidden"
-            src={authorQuery.data?.avatar || "/profile.svg"}
-            alt={authorQuery.data?.username}
-            width={70}
-            height={70}
-          />
+          <a>
+            <Image
+              className="w-[70px] h-[70px] rounded-full bg-gray overflow-hidden"
+              src={authorQuery.data?.avatar || "/profile.svg"}
+              alt={authorQuery.data?.username}
+              width={70}
+              height={70}
+            />
+          </a>
         </Link>
       </div>
       <div>
         <Link href={`/users/${comment.author}`}>
-          <div className="font-bold">{authorQuery.data?.username}</div>
+          <a className="font-bold">{authorQuery.data?.username}</a>
         </Link>
         <div className="text-gray">
           {dayjs(authorQuery.data?.createdAt).format("DD.MM.YYYY")}

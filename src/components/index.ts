@@ -22,4 +22,5 @@ export {
   Item,
   EditItem,
   User,
+  Search,
 } from "./pages";

@@ -6,6 +6,7 @@ import CreateItem from "./CreateItem";
 import Item from "./Item";
 import EditItem from "./EditItem";
 import User from "./User";
+import Search from "./Search";
 
 export {
   Signup,
@@ -16,4 +17,5 @@ export {
   Item,
   EditItem,
   User,
+  Search,
 };

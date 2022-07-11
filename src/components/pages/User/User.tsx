@@ -1,9 +1,11 @@
 import { useAPIQuery, useCurrentUser } from "hooks";
-import { Container, Button, Collection, Profile } from "components";
+import { Container, Button, Collection } from "components";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { Collection as CollectionType, UserData } from "types";
 import Image from "next/image";
+import Link from "next/link";
+import { windowIsDefined } from "utils";
 
 const User = () => {
   const currentUserQuery = useCurrentUser();
@@ -27,6 +29,8 @@ const User = () => {
             alt=""
           />
           {!currentUserQuery.isLoading &&
+            windowIsDefined() &&
+            window.localStorage.getItem("token") &&
             currentUserQuery.data?.user._id === user && (
               <Button>{t("Uplaod image")}</Button>
             )}
@@ -42,12 +46,19 @@ const User = () => {
         </div>
       </div>
       <div className="flex flex-col items-center mt-20">
-        <div>
-          <h2 className="text-3xl font-bold mb-10">{t("Collections")}</h2>
+        <div className="mb-10 flex gap-10">
+          <h2 className="text-3xl font-bold">{t("Collections")}</h2>
+          {!currentUserQuery.isLoading &&
+            windowIsDefined() &&
+            window.localStorage.getItem("token") &&
+            currentUserQuery.data?.user._id === user && (
+              <Link href="/collections/create">
+                <Button>Add Collection</Button>
+              </Link>
+            )}
         </div>
         {collectionsQuery.data?.collections.map((collection) => (
           <Collection
-            author={userQuery.data?.username as string}
             id={collection._id}
             key={collection._id}
             name={collection.name}
