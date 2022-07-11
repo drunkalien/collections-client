@@ -11,13 +11,14 @@ const RecentItems = () => {
   console.log(itemsQuery.data?.items);
   const columns: Column[] = [
     {
-      Header: "ID",
+      Header: "#",
       accessor: "id",
+      Cell: ({ row }) => <div>{row.index + 1}</div>,
     },
     {
       Header: t("Collection title"),
-      accessor: "collection",
-      Cell: ({ value }: any) => value?.name,
+      accessor: "itemCollection",
+      Cell: ({ value }: any) => <CollectionName id={value} />,
     },
     {
       Header: t("Item name"),
@@ -50,3 +51,13 @@ const RecentItems = () => {
 };
 
 export default RecentItems;
+
+const CollectionName = ({ id }: { id: string }) => {
+  const query = useAPIQuery({
+    url: `collections/${id}`,
+    options: { enabled: !!id },
+  });
+  const name = query.data?.name;
+  console.log(query.data);
+  return <>{name}</>;
+};

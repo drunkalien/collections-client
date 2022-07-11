@@ -18,5 +18,9 @@
   "Recent items": "Songi elementlar",
   "Remove": "O'chirish",
   "Tags": "Teglar",
-  "Uzbek": "O'zbek"
+  "Uzbek": "O'zbek",
+  "item": "Element",
+  "collection": "To'plam",
+  "user": "Foydalanuvchi",
+  "comment": "Komment"
 }
