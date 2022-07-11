@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 
 export const requestInstance = axios.create({
-  baseURL: "https://collections-server-production.up.railway.app/",
+  baseURL: "https://collections-server-production.up.railway.app/api/v1/",
 });
 
 requestInstance.interceptors.request.use((config: AxiosRequestConfig) => {
